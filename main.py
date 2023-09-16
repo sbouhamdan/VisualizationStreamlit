@@ -54,7 +54,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 # Load your data
-salaries = pd.read_csv('D:/AUB Courses/Visualization/Streamlit page/Salaries.csv')
+salaries = pd.read_csv('./Salaries.csv')
 
 tab1, tab2 = st.tabs(["Story", "Visualizations"])
 
@@ -79,7 +79,7 @@ with tab1:
 	with col2:
 		
 		st.markdown("<div class='right-column'>", unsafe_allow_html=True)
-		image_path = "datascience.jpg"  # Replace with the actual path to your image
+		image_path = "./datascience.jpg"  # Replace with the actual path to your image
 		st.image(image_path, use_column_width=True)
 		st.markdown("</div>", unsafe_allow_html=True)
 
