@@ -97,7 +97,9 @@ with tab2:
 	col1, col2 = st.columns([1, 2])
 	with col1:
 		# Filter by Company Location
-		company_location_filter = st.selectbox('Select Company Location', ['All'] + salaries['company_location'].unique().tolist())
+		st.write("")
+		st.write("")
+		company_location_filter = st.selectbox('Select Location', ['All'] + salaries['company_location'].unique().tolist())
 
 		# Filter by Work Year
 		available_work_years = salaries['work_year'].unique().tolist()
@@ -109,11 +111,11 @@ with tab2:
 			filtered_salaries = filtered_salaries[filtered_salaries['company_location'] == company_location_filter]
 		if selected_work_year != 'All':
 			filtered_salaries = filtered_salaries[filtered_salaries['work_year'] == selected_work_year]
-		st.write("")
+		st.write("")	
 		remote_ratio_fig = px.pie(
         filtered_salaries,
         names='remote_ratio',
-        title='Distribution of Remote Work',
+        title='Distribution of Remote Work % (0 , 50 and 100)',
         hole=0.4,
         color_discrete_sequence=['#FF5733', '#007acc', '#2ca02c', '#FFA500', '#e63946'],
         labels={'remote_ratio': 'Remote Work %'},
@@ -139,15 +141,17 @@ with tab2:
 		company_size_distribution_fig = px.bar(
 			pivot_df,
 			orientation='h',
-			title='',
+			#title='Top 5 Job Titles with Company Size Distribution',
 			labels={'y': 'Job Title'},
 			color_discrete_sequence=['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c'],
 		)
 		company_size_distribution_fig.update_xaxes(title='# of Jobs')
 		company_size_distribution_fig.update_yaxes(categoryorder='total ascending')
-		company_size_distribution_fig.update_layout(width=800, height=500)
+		company_size_distribution_fig.update_layout(title='Top 5 Job Titles with Company Size Distribution',
+		title_x=0.4,width=800, height=500)
 
-		st.write('#### Top 5 Job Titles with Company Size Distribution')
+		st.write('**Data related jobs are evolving over time and across countries, they are one of job types that can still be done remotely and are becoming more popular among companies**')
+		st.write('The interactive filtering feature in conjunction with these visual representations effectively and clearly convey this information')
 		st.plotly_chart(company_size_distribution_fig)
 		
 
@@ -155,14 +159,16 @@ with tab2:
 
 
 	# Create filters for employment_type and work_year next to each other
-	col1, col2 = st.columns(2)
+	col1, col2,col3 = st.columns([1,1,3])
 
 	with col1:
 		employment_type_filter = st.selectbox('Select Employment Type', ['All'] + salaries['employment_type'].unique().tolist())
-
+		
+		
 	with col2:
 		work_year_filter = st.selectbox('Select Work Year', ['All'] + salaries['work_year'].unique().tolist())
-
+	with col3: 
+		st.write("")
 	# Apply filters
 	filtered_salaries = salaries.copy()
 	if employment_type_filter != 'All':
@@ -210,13 +216,13 @@ with tab2:
 		xaxis=dict(title='Country'),
 		yaxis=dict(title='Number of jobs'),
 		yaxis2=dict(title='Average Salary', overlaying='y', side='right', showgrid=False, tickformat='$,.2f'),
-		legend=dict(x=0.02, y=0.95),  # Adjust the legend position
+		legend=dict(x=0.02, y=1),  # Adjust the legend position
 	)
 
 	# Use st.plotly_chart to display the Plotly figure
 	st.plotly_chart(fig, use_container_width=True)
 
-	st.subheader("Some useful insights:")
+	st.subheader("Key insights:")
 	st.write("")
 	st.write("1- Data Science jobs were more common among large size companies in 2020 and 2021,However, a dramatic increase happened in medium size companies after 2022")
 	st.write("2- Data science job opportunities are increasing with time")
@@ -224,7 +230,7 @@ with tab2:
 	st.write("4- Remote work decreased from 68.9% in 2020 during covid into 33% in 2023 and it is more common in canada")
 	st.write("5- United States has the highest average salary and then Canada come afterwards")
 	st.write("6- Currently, United states has the largest number of data science jobs followed by United Kingdom")
-	st.write("7- Data science jobs are decreasing in india with time unlike the other countries")
+	st.write("7- Average salary for these jobs is increasing across countries except for india that decreased in the last year")
 
 	
 	
